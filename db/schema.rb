@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 5) do
+ActiveRecord::Schema.define(:version => 20130601192130) do
+
+  create_table "events", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "thing_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "events", ["user_id", "thing_id"], :name => "index_events_on_user_id_and_thing_id"
 
   create_table "rails_admin_histories", :force => true do |t|
     t.string   "message"

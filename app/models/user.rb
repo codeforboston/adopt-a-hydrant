@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
   has_many :reminders_to, class_name: "Reminder", foreign_key: "to_user_id"
   has_many :reminders_from, class_name: "Reminder", foreign_key: "from_user_id"
   has_many :things
+  has_many :events
+
   before_validation :remove_non_digits_from_phone_numbers
   def remove_non_digits_from_phone_numbers
     self.sms_number = self.sms_number.to_s.gsub(/\D/, '').to_i if self.sms_number.present?

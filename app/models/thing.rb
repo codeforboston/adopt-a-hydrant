@@ -5,6 +5,7 @@ class Thing < ActiveRecord::Base
   validates_presence_of :lat, :lng
   belongs_to :user
   has_many :reminders
+  has_many :events
 
   def self.find_closest(lat, lng, limit=10)
     query = <<-SQL

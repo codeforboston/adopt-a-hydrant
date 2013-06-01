@@ -11,6 +11,7 @@ en:
     email_password: "Email me my password"
     find: "Find %{thing}"
     send_reminder: "Send reminder to shovel"
+    shovel: "I Shoveled!"
     sign_in: "Sign in"
     sign_out: "Sign out"
     sign_up: "Sign up"

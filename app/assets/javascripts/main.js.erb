@@ -414,6 +414,26 @@ $(function() {
     });
     return false;
   });
+  $('#shovel_form').live('submit', function() {
+    var submitButton = $("#shovel_form input[type='submit']");  
+    $(submitButton).attr("disabled", true);
+    $.ajax({
+        type: 'POST',
+        url: '/events.json',
+        data: {
+          'thing_id': $('#thing_id').val(),
+          'utf8': '✓',
+          'authenticity_token': $('#shovel_form input[name="authenticity_token"]').val(),  
+        },
+        error: function(jqXHR) {
+          $(submitButton).attr("disabled", false);
+        },
+        success: function(data) {
+          alert('success');
+        }
+      });
+    return false;
+  });
   $('#abandon_form').live('submit', function() {
     var answer = window.confirm("Are you sure you want to abandon this <%= I18n.t("defaults.thing") %>?")
     if(answer) {

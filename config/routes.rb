@@ -17,6 +17,8 @@ AdoptAThing::Application.routes.draw do
 
   resource :reminders
   resource :things
+  resource :events
+  
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   root to: 'main#index'
 end

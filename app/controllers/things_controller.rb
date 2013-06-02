@@ -13,6 +13,7 @@ class ThingsController < ApplicationController
   def update
     @thing = Thing.find(params[:id])
     if @thing.update_attributes(thing_params)
+      Event.create!(:user_id => current_user.id, :thing_id => @thing.id, :event_type_id => EventType.where(action: (params[:thing][:user_id].blank? ? 'abandoned' : 'adopted')).first.id)
       respond_with @thing
     else
       render(json: {errors: @thing.errors}, status: 500)

@@ -11,13 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130601192130) do
+ActiveRecord::Schema.define(:version => 20130601232158) do
+
+  create_table "event_types", :force => true do |t|
+    t.string   "i18n_key"
+    t.string   "action"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "event_types", ["action"], :name => "index_event_types_on_action"
 
   create_table "events", :force => true do |t|
     t.integer  "user_id"
     t.integer  "thing_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "event_type_id"
   end
 
   add_index "events", ["user_id", "thing_id"], :name => "index_events_on_user_id_and_thing_id"

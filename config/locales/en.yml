@@ -83,6 +83,10 @@ en:
     sign_in: "Sign in to adopt this %{thing}"
     thank_you: "Thank you for adopting this %{thing}!"
     tos: "Terms of Service"
+  constants:
+    shoveled: "Shoveled"
+    abandoned: "Abandoned"
+    adopted: "Adopted"
   sponsors:
     built: "Built in Boston"
     cfa: "Code for America"

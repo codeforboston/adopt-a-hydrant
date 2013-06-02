@@ -420,8 +420,10 @@ $(function() {
     $.ajax({
         type: 'POST',
         url: '/events.json',
+        dataType: 'json',
         data: {
           'thing_id': $('#thing_id').val(),
+          'event_type_id': <%= EventType.where(action: "shoveled").first.id %>,
           'utf8': '✓',
           'authenticity_token': $('#shovel_form input[name="authenticity_token"]').val(),  
         },
@@ -429,7 +431,8 @@ $(function() {
           $(submitButton).attr("disabled", false);
         },
         success: function(data) {
-          alert('success');
+          // TODO: Carol, plug in here to show some sort of reward!
+          alert("Congratulations! You have shoveled this thing " + data.count + " time(s)!");
         }
       });
     return false;

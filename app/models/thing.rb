@@ -17,6 +17,21 @@ class Thing < ActiveRecord::Base
     find_by_sql([query, lat.to_f, lng.to_f, lat.to_f, limit.to_i])
   end
 
+  # Return all things that need to be adopted
+  def self.all_unadopted
+    where("user_id IS NULL")
+  end
+
+  # Return all things that are currently adopted
+  def self.all_adopted
+    where("user_id IS NOT NULL")
+  end
+
+  # Find things which have had a certain event since a specified time.
+  def self.with_event_type(event_type_id, since)
+    all(:joins => {:events => :event_type}, :conditions => ["events.event_type_id = ? AND events.created_at < ?", event_type_id, since])
+  end
+
   def reverse_geocode
     @reverse_geocode ||= MultiGeocoder.reverse_geocode([lat, lng])
   end

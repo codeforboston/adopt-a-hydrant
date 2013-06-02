@@ -1,5 +1,6 @@
 = form_for :event, :url => events_path, :method => :post, :html => {:id => "shovel_form"} do |f|
   = f.hidden_field "thing_id", :value => ""
+  = f.hidden_field "event_type_id", :value => ""
   %fieldset.control-group
 
     = f.submit t("buttons.shovel", :thing => t("defaults.thing")), :class => "btn-large btn btn-success"

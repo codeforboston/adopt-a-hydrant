@@ -75,4 +75,26 @@ class Thing < ActiveRecord::Base
   def adopted?
     !user_id.nil?
   end
+
+  def shovel_action_needed?(event,event_type_id,thing,trigger,interval_days)
+    Time.now - trigger > interval_days*24.hours && count(:joins => [:events], :conditions => ["events.event_type_id = ? AND events.created_at < ? AND things.id = ?", event_type_id, trigger, self.id])>0
+  end
+
+  def color
+    if adopted?
+      if action_needed?
+        color = 'red'
+      else
+        color = 'green'
+      end
+    else
+      color = 'yellow'
+    end
+    return color
+
+  def my_thing?(user)
+    user.id == current_user.id
+  end
+
+
 end

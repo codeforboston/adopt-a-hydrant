@@ -328,6 +328,21 @@ $(function() {
             $('#user_password').focus();
           },
           success: function(data) {
+            if(data.thing != null)
+            {
+              $.ajax({
+                type: 'GET',
+                url: '/things',
+                data: {
+                  'id': data.thing.id
+                },
+                success: function(data) {
+                  var point = new google.maps.LatLng(data.lat, data.lng);
+                  map.setZoom(18);
+                  map.panTo(point);
+                }
+              });
+            }
             $.ajax({
               type: 'GET',
               url: '/sidebar/search',

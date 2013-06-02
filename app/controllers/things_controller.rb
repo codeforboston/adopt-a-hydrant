@@ -2,11 +2,15 @@ class ThingsController < ApplicationController
   respond_to :json
 
   def show
-    @things = Thing.find_closest(params[:lat], params[:lng], params[:limit] || 10)
-    unless @things.blank?
-      respond_with @things
+    if params[:id].blank?
+      @things = Thing.find_closest(params[:lat], params[:lng], params[:limit] || 10)
+      unless @things.blank?
+        respond_with @things
+      else
+        render(json: {errors: {address: [t("errors.not_found", thing: t("defaults.thing"))]}}, status: 404)
+      end
     else
-      render(json: {errors: {address: [t("errors.not_found", thing: t("defaults.thing"))]}}, status: 404)
+      respond_with Thing.find(params[:id])
     end
   end
 

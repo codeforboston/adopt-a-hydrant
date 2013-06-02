@@ -7,7 +7,7 @@ class SessionsController < Devise::SessionsController
     resource = warden.authenticate(:scope => resource_name)
     if resource
       sign_in(resource_name, resource)
-      render(json: resource)
+      render(json: {:user => resource, :thing => resource.things.first})
     else
       render(json: {errors: {password: [t("errors.password")]}}, status: 401)
     end

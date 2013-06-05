@@ -3,6 +3,7 @@ AdoptAThing::Application.routes.draw do
     passwords: 'passwords',
     registrations: 'users',
     sessions: 'sessions',
+    omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
   get '/address', to: 'addresses#show', as: 'address'

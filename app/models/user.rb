@@ -1,10 +1,12 @@
 class User < ActiveRecord::Base
   include ActiveModel::ForbiddenAttributesProtection
+  attr_accessible :provider, :uid, :provider_name
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable,
-    :trackable, :validatable
+    :trackable, :validatable, :token_authenticatable, :omniauthable, 
+    :omniauth_providers => [:facebook, :twitter]
   validates_formatting_of :email, using: :email
   validates_formatting_of :sms_number, using: :us_phone, allow_blank: true
   validates_formatting_of :voice_number, using: :us_phone, allow_blank: true
@@ -19,5 +21,26 @@ class User < ActiveRecord::Base
   def remove_non_digits_from_phone_numbers
     self.sms_number = self.sms_number.to_s.gsub(/\D/, '').to_i if self.sms_number.present?
     self.voice_number = self.voice_number.to_s.gsub(/\D/, '').to_i if self.voice_number.present?
+  end
+
+  def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
+    user = User.where(:provider => auth.provider, :uid => auth.uid).first
+    unless user
+      user = User.create(provider_username:auth.extra.raw_info.name,
+                         provider:auth.provider,
+                         uid:auth.uid,
+                         email:auth.info.email,
+                         password:Devise.friendly_token[0,20]
+                         )
+    end
+    user
+  end
+
+  def self.new_with_session(params, session)
+    super.tap do |user|
+      if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
+        user.email = data["email"] if user.email.blank?
+      end
+    end
   end
 end

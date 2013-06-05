@@ -1,6 +1,7 @@
 class Thing < ActiveRecord::Base
   include ActiveModel::ForbiddenAttributesProtection
   include Geokit::Geocoders
+  attr_accessible :indicator_and_color, :city_id, :lat, :lng
   validates_uniqueness_of :city_id, allow_nil: true
   validates_presence_of :lat, :lng
   belongs_to :user
@@ -29,7 +30,7 @@ class Thing < ActiveRecord::Base
 
   # Find things which have had a certain event since a specified time.
   def self.with_event_type(event_type_id, since)
-    all(:joins => {:events => :event_type}, :conditions => ["events.event_type_id = ? AND events.created_at < ?", event_type_id, since])
+    all(:joins => [:events], :conditions => ["events.event_type_id = ? AND events.created_at < ?", event_type_id, since])
   end
 
   def reverse_geocode
@@ -76,25 +77,27 @@ class Thing < ActiveRecord::Base
     !user_id.nil?
   end
 
-  def shovel_action_needed?(event,event_type_id,thing,trigger,interval_days)
-    Time.now - trigger > interval_days*24.hours && count(:joins => [:events], :conditions => ["events.event_type_id = ? AND events.created_at < ? AND things.id = ?", event_type_id, trigger, self.id])>0
+  # Determine if an event type has happened to this thing within 'hours' of 'trigger'
+  # true if at least 1 event of event_type_id took place in the timeframe
+  def action_happened?(event_type_id, trigger, hours)
+    Thing.count(:joins => [:events], :conditions => ["events.event_type_id = ? AND events.created_at BETWEEN ? and ?", event_type_id, trigger, trigger + (hours).hours]) > 0
   end
 
-  def color
+  # Indicates the state of this "thing"
+  def indicator_and_color(current_user, event_type_id, trigger, hours)
+    ic = {:color => 'green', :indicator => 'thing'}
     if adopted?
-      if action_needed?
-        color = 'red'
-      else
-        color = 'green'
+      if !action_happened?(event_type_id, trigger, hours)
+        ic[:color] = 'red'
       end
+      ic[:indicator] = 'my_thing' if my_thing?(current_user)
     else
-      color = 'yellow'
+      ic[:color] = 'yellow'
     end
-    return color
+    ic
+  end
 
-  def my_thing?(user)
+  def my_thing?(current_user)
     user.id == current_user.id
   end
-
-
 end

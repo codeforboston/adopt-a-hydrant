@@ -1,0 +1,11 @@
+test:
+  provider: wunderground
+  api_key:
+
+development:
+  provider: wunderground
+  api_key:
+
+production:
+  provider: wunderground
+  api_key:

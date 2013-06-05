@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130601232158) do
+ActiveRecord::Schema.define(:version => 20130604010355) do
 
   create_table "event_types", :force => true do |t|
     t.string   "i18n_key"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(:version => 20130601232158) do
     t.decimal  "lng",        :precision => 17, :scale => 14, :null => false
     t.integer  "city_id"
     t.integer  "user_id"
+    t.string   "type"
   end
 
   add_index "things", ["city_id"], :name => "index_things_on_city_id", :unique => true
@@ -94,6 +95,9 @@ ActiveRecord::Schema.define(:version => 20130601232158) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "provider_username"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

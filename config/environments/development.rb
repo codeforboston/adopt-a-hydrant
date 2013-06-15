@@ -35,4 +35,7 @@ AdoptAThing::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  config.logger = Logger.new(File.dirname(__FILE__) + "/../../log/#{Rails.env}.log") 
+  config.logger.formatter = Logger::Formatter.new
 end

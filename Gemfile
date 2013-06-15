@@ -15,6 +15,8 @@ gem 'validates_formatting_of'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'seed_dumper'
+gem 'resque', :git => "https://github.com/resque/resque.git", :branch => "1-x-stable"
+gem 'httparty'
 
 platforms :ruby_18 do
   gem 'fastercsv'

@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   include ActiveModel::ForbiddenAttributesProtection
-  attr_accessible :provider, :uid, :provider_name
+  attr_accessible :provider, :uid, :provider_name, :email, :name, :organization, :password, 
+    :password_confirmation, :sms_number, :voice_number
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -18,6 +19,8 @@ class User < ActiveRecord::Base
   has_many :events
 
   before_validation :remove_non_digits_from_phone_numbers
+  before_save :ensure_authentication_token
+
   def remove_non_digits_from_phone_numbers
     self.sms_number = self.sms_number.to_s.gsub(/\D/, '').to_i if self.sms_number.present?
     self.voice_number = self.voice_number.to_s.gsub(/\D/, '').to_i if self.voice_number.present?

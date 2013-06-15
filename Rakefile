@@ -3,5 +3,12 @@
 # for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
 require File.expand_path('../config/application', __FILE__)
+require 'resque/tasks'
+
+namespace :resque do
+  task :setup => :environment do
+    # nothing here
+  end
+end
 
 AdoptAThing::Application.load_tasks

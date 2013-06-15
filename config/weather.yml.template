@@ -1,11 +1,17 @@
 test:
   provider: wunderground
-  api_key:
+  api_key: 
+  summer_start: yyyy-05-01
+  summer_end: yyyy-09-01
 
 development:
   provider: wunderground
-  api_key:
+  api_key: 
+  summer_start: yyyy-05-01
+  summer_end: yyyy-09-01
 
 production:
   provider: wunderground
   api_key:
+  summer_start: yyyy-05-01
+  summer_end: yyyy-09-01

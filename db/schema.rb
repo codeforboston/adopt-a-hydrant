@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130604010355) do
+ActiveRecord::Schema.define(:version => 20130615131350) do
+
+  create_table "cities", :force => true do |t|
+    t.string   "city_name"
+    t.string   "state_abbreviation"
+    t.string   "state_name"
+    t.decimal  "lat",                :precision => 16, :scale => 14, :null => false
+    t.decimal  "lng",                :precision => 17, :scale => 14, :null => false
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
+  end
 
   create_table "event_types", :force => true do |t|
     t.string   "i18n_key"
@@ -70,7 +80,7 @@ ActiveRecord::Schema.define(:version => 20130604010355) do
     t.string   "type"
   end
 
-  add_index "things", ["city_id"], :name => "index_things_on_city_id", :unique => true
+  add_index "things", ["city_id"], :name => "index_things_on_city_id"
 
   create_table "users", :force => true do |t|
     t.datetime "created_at",                                :null => false
@@ -98,8 +108,10 @@ ActiveRecord::Schema.define(:version => 20130604010355) do
     t.string   "provider"
     t.string   "uid"
     t.string   "provider_username"
+    t.string   "authentication_token"
   end
 
+  add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 

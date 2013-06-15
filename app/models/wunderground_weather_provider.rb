@@ -40,7 +40,7 @@ class WundergroundWeatherProvider < WeatherProvider
 
   def winter_weather_advisory?(city_id)
     super(city_id)
-    #return false unless provider_enabled?(city_id)
+    return false unless provider_enabled?(city_id)
     city = City.find_by_id(city_id)
     return false if city.blank?
     url = "http://api.wunderground.com/api/#{WEATHER_CONFIG.api_key}/alerts/q/#{city.state_abbreviation}/#{city.underscored_name}.json"

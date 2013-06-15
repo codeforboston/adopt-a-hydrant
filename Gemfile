@@ -17,6 +17,8 @@ gem 'omniauth-facebook'
 gem 'seed_dumper'
 gem 'resque', :git => "https://github.com/resque/resque.git", :branch => "1-x-stable"
 gem 'httparty'
+gem 'capistrano'
+gem 'rvm-capistrano'
 
 platforms :ruby_18 do
   gem 'fastercsv'

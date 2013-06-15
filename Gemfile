@@ -19,6 +19,7 @@ gem 'resque', :git => "https://github.com/resque/resque.git", :branch => "1-x-st
 gem 'httparty'
 gem 'capistrano'
 gem 'rvm-capistrano'
+gem 'apn_on_rails'
 
 platforms :ruby_18 do
   gem 'fastercsv'

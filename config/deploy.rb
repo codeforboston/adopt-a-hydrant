@@ -30,6 +30,15 @@ role :db,  "ec2-107-21-253-25.compute-1.amazonaws.com", :primary => true # This 
 # if you want to clean up old releases on each deploy uncomment this:
 after "deploy:restart", "deploy:cleanup"
 
+namespace :bundle do
+
+  desc "run bundle install and ensure all gem requirements are met"
+  task :install do
+    run "cd #{current_path} && bundle install"
+  end
+
+end
+before "deploy:restart", "bundle:install"
 # if you're still using the script/reaper helper you will need
 # these http://github.com/rails/irs_process_scripts
 

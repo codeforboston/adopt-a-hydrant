@@ -11,14 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130615205035) do
+ActiveRecord::Schema.define(:version => 20130624211245) do
 
   create_table "apn_apps", :force => true do |t|
     t.text     "apn_dev_cert"
     t.text     "apn_prod_cert"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.string   "name"
   end
+
+  add_index "apn_apps", ["name"], :name => "index_apn_apps_on_name", :unique => true
 
   create_table "apn_device_groupings", :force => true do |t|
     t.integer "group_id"
@@ -182,11 +185,15 @@ ActiveRecord::Schema.define(:version => 20130615205035) do
     t.string   "provider_username"
     t.string   "authentication_token"
     t.string   "ios_device_token"
+    t.string   "provider_secret"
+    t.string   "provider_token"
+    t.integer  "provider_token_expire"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["ios_device_token"], :name => "index_users_on_ios_device_token", :unique => true
+  add_index "users", ["provider_token", "provider_token_expire"], :name => "index_users_on_provider_token_and_provider_token_expire"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
 end

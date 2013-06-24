@@ -13,6 +13,8 @@ en:
     send_reminder: "Send reminder to shovel"
     shovel: "I Shoveled!"
     sign_in: "Sign in"
+    sign_in_facebook: "Sign in with Facebook"
+    sign_in_twitter: "Sign in with Twitter"
     sign_out: "Sign out"
     sign_up: "Sign up"
     update: "Update"

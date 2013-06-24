@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   include ActiveModel::ForbiddenAttributesProtection
   attr_accessible :provider, :uid, :provider_name, :email, :name, :organization, :password, 
-    :password_confirmation, :sms_number, :voice_number
+    :password_confirmation, :sms_number, :voice_number, :provider_username
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -26,15 +26,20 @@ class User < ActiveRecord::Base
     self.voice_number = self.voice_number.to_s.gsub(/\D/, '').to_i if self.voice_number.present?
   end
 
-  def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
+  def self.find_or_create_oauth_user(auth, signed_in_resource = nil)
+    logger.debug(auth.inspect)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
-    unless user
-      user = User.create(provider_username:auth.extra.raw_info.name,
-                         provider:auth.provider,
-                         uid:auth.uid,
-                         email:auth.info.email,
-                         password:Devise.friendly_token[0,20]
-                         )
+    if user.nil?
+      user = User.new
+      user.provider_username = auth.extra.raw_info.name
+      user.provider = auth.provider
+      user.provider_token = auth.credentials.token
+      user.provider_token_expire = auth.credentials.expires_at
+      user.uid = auth.uid
+      user.email = auth.info.email
+      user.name = auth.info.name
+      user.password = Devise.friendly_token[0,20]
+      user.save!
     end
     user
   end

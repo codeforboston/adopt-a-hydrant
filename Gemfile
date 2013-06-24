@@ -14,6 +14,7 @@ gem 'strong_parameters'
 gem 'validates_formatting_of'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'omniauth-twitter'
 gem 'seed_dumper'
 gem 'resque', :git => "https://github.com/resque/resque.git", :branch => "1-x-stable"
 gem 'httparty'

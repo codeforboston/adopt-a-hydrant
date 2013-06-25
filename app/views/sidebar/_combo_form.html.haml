@@ -43,6 +43,7 @@
     .form-actions
       = f.submit t("buttons.sign_up"), :class => "btn btn-primary"
       = link_to t("buttons.sign_in_facebook"), user_omniauth_authorize_path(:facebook)
+      = link_to t("buttons.sign_in_google"), user_omniauth_authorize_path(:google_oauth2)
     %p
       = t("defaults.tos", :tos => link_to(t("titles.tos"), "#tos", :id => "tos_link", :"data-toggle" => "modal")).html_safe
   %fieldset#user_sign_in_fields{:style => "display: none;"}
@@ -57,6 +58,7 @@
     .form-actions
       = f.submit t("buttons.sign_in"), :class => "btn btn-primary"
       = link_to t("buttons.sign_in_facebook"), user_omniauth_authorize_path(:facebook)
+      = link_to t("buttons.sign_in_google"), user_omniauth_authorize_path(:google_oauth2)
     %p
       = link_to t("links.forgot_password"), "#", :id => "user_forgot_password_link"
   %fieldset#user_forgot_password_fields{:style => "display: none;"}

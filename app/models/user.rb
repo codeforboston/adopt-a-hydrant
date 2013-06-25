@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable,
     :trackable, :validatable, :token_authenticatable, :omniauthable, 
-    :omniauth_providers => [:facebook, :twitter]
+    :omniauth_providers => [:facebook, :google_oauth2]
   validates_formatting_of :email, using: :email
   validates_formatting_of :sms_number, using: :us_phone, allow_blank: true
   validates_formatting_of :voice_number, using: :us_phone, allow_blank: true
@@ -27,7 +27,6 @@ class User < ActiveRecord::Base
   end
 
   def self.find_or_create_oauth_user(auth, signed_in_resource = nil)
-    logger.debug(auth.inspect)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
     if user.nil?
       user = User.new

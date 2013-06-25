@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130624211245) do
+ActiveRecord::Schema.define(:version => 20130625215716) do
 
   create_table "apn_apps", :force => true do |t|
     t.text     "apn_dev_cert"
@@ -191,8 +191,8 @@ ActiveRecord::Schema.define(:version => 20130624211245) do
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["ios_device_token"], :name => "index_users_on_ios_device_token", :unique => true
+  add_index "users", ["provider", "uid"], :name => "index_users_on_provider_and_uid"
   add_index "users", ["provider_token", "provider_token_expire"], :name => "index_users_on_provider_token_and_provider_token_expire"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 

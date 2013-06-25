@@ -208,7 +208,7 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
   OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE if Rails.env.development? 
   config.omniauth :facebook, "384551031654696", "a1e1dace0d1e510eac23d2a698b3db99", :strategy_class => OmniAuth::Strategies::Facebook
-  config.omniauth :twitter, "U0e7I9zjfAbGL0MmlOU51Q", "VC9XQt6pTNilnn6pazqwpcitGiNA1wSuSkq6GcpuDbY", :strategy_class => OmniAuth::Strategies::Twitter
+  config.omniauth :google_oauth2, "1033531616232.apps.googleusercontent.com", "MWJ9LH8PvKXzGA9yB_lu9on8"
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
